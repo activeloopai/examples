@@ -1,0 +1,1 @@
+hub==git+https://github.com/activeloopai/Hub.git@ray_compute
