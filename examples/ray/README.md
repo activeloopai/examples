@@ -1,4 +1,4 @@
-# Distributed processing with Ray
+# Distributed Processing with Ray
 
 
 ## Execute locally
