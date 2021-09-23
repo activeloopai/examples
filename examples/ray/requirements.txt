@@ -1,1 +1,2 @@
-hub==git+https://github.com/activeloopai/Hub.git@ray_compute
+ray[default]==1.6
+git+https://github.com/activeloopai/Hub.git@ray_compute

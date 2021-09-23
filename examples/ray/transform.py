@@ -6,19 +6,22 @@ from PIL import Image
 
 import hub
 
-SAMPLES = 500
-DS_OUT_PATH = "./data/cars_out" # "s3://snark-test/testing" 
+NUM_SAMPLES = 500
+NUM_WORKERS = 2
+DS_OUT_PATH = "~/data/cars_out" # "s3://bucket/dataset_name" 
 
 parser = argparse.ArgumentParser(description='PyTorch RPC Batch RL example')
-parser.add_argument('--samples', type=int, default=SAMPLES, metavar='S',
+parser.add_argument('--num_samples', type=int, default=NUM_SAMPLES, metavar='S',
                     help='how many samples dataset should have')
 parser.add_argument('--ds_out', type=str, default=DS_OUT_PATH, metavar='O',
                     help='dataset path to be transformed into')
+parser.add_argument('--num_workers', type=int, default=NUM_WORKERS, metavar='O',
+                    help='number of workers to allocate')
 
 args = parser.parse_args()
 
 
-def define_dataset(path: str, n_samples: int = 100) -> hub.Dataset:
+def define_dataset(path: str) -> hub.Dataset:
     """ Define the dataset """
     ds = hub.empty(path, overwrite=True)
     
@@ -53,10 +56,10 @@ def downsample(index, samples_out):
 if __name__ == "__main__":
     
     # Define a dataset and fill in random images
-    ds_out = define_dataset(args.ds_out, args.samples)
+    ds_out = define_dataset(args.ds_out)
 
     # Run the distributed computation
     t1 = time.time()
-    downsample().eval(list(range(args.samples)), ds_out, num_workers=12, scheduler="ray")
+    downsample().eval(list(range(args.num_samples)), ds_out, num_workers=args.num_workers, scheduler="ray")
     t2 = time.time()
     print(f"The processing took {t2-t1}")

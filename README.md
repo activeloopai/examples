@@ -6,7 +6,7 @@
  
  
 A repository showcasing examples of using [Hub](https://github.com/pytorch/pytorch)
- - [Examples go here](example)
+ - [Distributed processing with Ray](examples/ray)
  
  
 ## Getting Started with Hub 🚀 
