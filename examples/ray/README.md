@@ -35,7 +35,7 @@ Notes
 ray dashboard ./cluster.yaml
 ```
 
-* Update locally the code and sync the cluster
+* Update locally the code and sync to the cluster
 
 ```
 ray rsync-up ./cluster.yaml
