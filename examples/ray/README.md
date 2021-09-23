@@ -1,33 +1,30 @@
-## Distributed processing with Ray
+# Distributed processing with Ray
 
-### 1. Install ray on your local machine
+
+## Execute locally
+Install hub+ray and run the script locally to create a dataset of size `num_samples`
 ```
-pip3 install ray==1.6
+pip3 install -r requirements.txt
+python3 transform.py --num_workers 2 --ds_out ./tmp/cars --num_samples 1000
 ```
 
-### 2. Start a ray cluster and attach to it (Optional)
-Requires AWS credentials. If you skip this step, it will start a ray cluster on your machine.
+
+## Execute on a cluster
+#### 1. Start the cluster
+Requires AWS credentials. If you skip this step, it will start a ray cluster on your machine. You can further modify the cluster in cluster.yaml
 ```
 ray up ./cluster.yaml
-ray attach ./cluster.yaml
-```
-You can further modify the cluster in cluster.yaml
-
-### 3. Execute the code
-```
-python3 ~/hub/transform.py --num_workers 2
 ```
 
-or to store on an S3
+#### 2. Execute the code, dataset created on head node
 ```
-python3 ~/hub/transform.py --num_workers 2 --ds_out s3://bucket/dataaset
+ray exec ./cluster.yaml "python3 ~/hub/transform.py --num_workers 2 --ds_out s3://bucket/dataset_name --num_samples 1000"
 ```
 Change number of workers to 6 once all workers are up.
 
 
-### 4. Once you are done please shut down the cluster.
+#### 4. Shut down the cluster
 ```
-exit
 ray down ./cluster.yaml
 ```
 
@@ -44,7 +41,8 @@ ray dashboard ./cluster.yaml
 ray rsync-up ./cluster.yaml
 ```
 
-* Directly execute code on the cluster from local machine
+* Attach and execute locally
 ```
-ray exec ./cluster.yaml "python3 ~/hub/transform.py --num_workers 2"
+ray attach ./cluster.yaml
+> python3 ~/hub/transform.py --num_workers 2
 ```
