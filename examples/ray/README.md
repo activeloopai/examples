@@ -11,7 +11,7 @@ Requires AWS credentials. If you skip this step, it will start a ray cluster on 
 ray up ./cluster.yaml
 ray attach ./cluster.yaml
 ```
-You can configure further
+You can further modify the cluster in cluster.yaml
 
 ### 3. Execute the code
 ```
