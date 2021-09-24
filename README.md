@@ -6,7 +6,7 @@
  
  
 A repository showcasing examples of using [Hub](https://github.com/pytorch/pytorch)
- - [Examples go here](example)
+ - [Uploading Dataset Places365](datasets/places365)
  
  
 ## Getting Started with Hub 🚀 
