@@ -7,7 +7,7 @@ import time
 import torchvision.datasets as datasets
 
 NUM_WORKERS = 1
-DS_OUT_PATH = "./data/places365" # optionally s3://, gcs:// or hub:// path 
+DS_OUT_PATH = "./data/places365"  # optionally s3://, gcs:// or hub:// path
 DOWNLOAD = False
 
 parser = argparse.ArgumentParser(description="Hub Places365 Uploading")
@@ -71,11 +71,14 @@ def upload_iteration(filenames_target: list, ds: hub.Dataset):
 
 if __name__ == "__main__":
 
-    for split in ["val", "train-standard"]:  # optionally replace "train-complete" for 8M images
+    for split in [
+        "val",
+        "train-standard",
+    ]:  # optionally add ["train-challenge"] for 8M images
         torch_dataset = datasets.Places365(
             args.data,
             split=split,
-            download=args.download, 
+            download=args.download,
         )
         categories = torch_dataset.load_categories()[0]
         categories = list(map(lambda x: "/".join(x.split("/")[2:]), categories))
@@ -85,7 +88,7 @@ if __name__ == "__main__":
         print(f"uploading {split}...")
         t1 = time.time()
         if args.num_workers > 1:
-            
+
             upload_parallel().eval(
                 filenames_target[0],
                 ds,
