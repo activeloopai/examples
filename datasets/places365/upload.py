@@ -4,11 +4,22 @@ from PIL import Image
 import argparse
 import tqdm
 import time
+
+import traceback
+import sys
+
+import logging
+
 import torchvision.datasets as datasets
 
 NUM_WORKERS = 1
 DS_OUT_PATH = "./data/places365"  # optionally s3://, gcs:// or hub:// path
 DOWNLOAD = False
+splits = [
+    "train-standard",
+    # "val",
+    # "train-challenge"
+]
 
 parser = argparse.ArgumentParser(description="Hub Places365 Uploading")
 parser.add_argument("data", metavar="DIR", help="path to dataset")
@@ -50,31 +61,34 @@ def define_dataset(path: str, class_names: list = []):
 @hub.compute
 def upload_parallel(pair_in, sample_out):
     filepath, target = pair_in[0], pair_in[1]
-    img = Image.open(filepath)
-    if len(img.size) == 2:
-        img = img.convert("RGB")
-    arr = np.asarray(img)
-    sample_out.images.append(arr)
-    sample_out.labels.append(target)
+    try:
+        img = Image.open(filepath)
+        if len(img.size) == 2:
+            img = img.convert("RGB")
+        arr = np.asarray(img)
+        sample_out.images.append(arr)
+        sample_out.labels.append(target)
+    except Exception as e:
+        logging.error(f"failed uploading {filepath} with target {target}")
 
 
 def upload_iteration(filenames_target: list, ds: hub.Dataset):
     with ds:
         for filepath, target in tqdm.tqdm(filenames_target):
-            img = Image.open(filepath)
-            if len(img.size) == 2:
-                img = img.convert("RGB")
-            arr = np.asarray(img)
-            ds.images.append(arr)
-            ds.labels.append(target)
+            try:
+                img = Image.open(filepath)
+                if len(img.size) == 2:
+                    img = img.convert("RGB")
+                arr = np.asarray(img)
+                ds.images.append(arr)
+                ds.labels.append(target)
+            except Exception as e:
+                logging.error(f"failed uploading {filepath} with target {target}")
 
 
 if __name__ == "__main__":
 
-    for split in [
-        "val",
-        "train-standard",
-    ]:  # optionally add ["train-challenge"] for 8M images
+    for split in splits:
         torch_dataset = datasets.Places365(
             args.data,
             split=split,
