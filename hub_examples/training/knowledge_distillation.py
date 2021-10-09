@@ -1,5 +1,10 @@
+import hub
+import numpy as np
 import torch
+
 from torch.nn import Sequential, Linear, ReLU, Dropout
+from torch.nn.functional import cross_entropy
+from torch.optim import SGD
 
 
 # PAPER1: https://arxiv.org/pdf/1503.02531.pdf (knowledge distillation, section 3)
@@ -44,5 +49,51 @@ small_net = Sequential(
     Linear(800, 10),       # output layer weights
 )
 
-# PAPER1: "in addition, the input images were jittered by up to two pixels in any direction"
-# TODO
+# NOTE ignore this step from PAPER1: "in addition, the input images were jittered by up to two pixels in any direction"
+def transform(sample):
+    x = sample["images"].float()
+    t = sample["labels"].long()
+    return x, t
+
+
+mnist = hub.load("hub://activeloop/mnist-train")[:256]
+
+
+
+# PAPER1: "To see how well distillation works, we trained [... describe nets ...] on all [MNIST] 60,000 training cases"
+
+def train(net, name: str, epochs=1, batch_size=64, lr=0.01):
+    dataloader = mnist.pytorch(transform=transform, batch_size=batch_size)
+    optim = SGD(net.parameters(), lr=lr)
+
+    # you can use hub to log your metrics!
+    metrics = hub.empty(f"./metrics_{name}", overwrite=True)
+    loss_epoch_average = metrics.create_tensor("loss_epoch_average", dtype=float)
+    
+
+    for epoch in range(epochs):
+        epoch_loss = metrics.create_tensor(f"loss_epoch_{epoch}", dtype=float)
+
+        for batch in dataloader:
+            optim.zero_grad()
+
+            x, t = batch
+
+            x = x.view(-1, 784)
+            t = t.view(-1)
+
+            y = net(x)
+
+            loss = cross_entropy(y, t)
+            loss.backward()
+
+            optim.step()
+
+            epoch_loss.append(loss.item())
+
+        loss_epoch_average.append(np.mean(epoch_loss))
+
+    return metrics
+
+metrics = train(big_net, "big_net")
+print(metrics.loss_epoch_average.numpy())
