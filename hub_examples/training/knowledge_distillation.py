@@ -51,18 +51,19 @@ small_net = Sequential(
 
 # NOTE ignore this step from PAPER1: "in addition, the input images were jittered by up to two pixels in any direction"
 def transform(sample):
-    x = sample["images"].float().view(-1, 784)
-    t = sample["labels"].long().view(-1)
+    x = sample["images"].float().view(-1)
+    t = sample["labels"].long()
     return x, t
 
 
 mnist = hub.load("hub://activeloop/mnist-train")
 
 
-
 # PAPER1: "To see how well distillation works, we trained [... describe nets ...] on all [MNIST] 60,000 training cases"
-
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 def train(net, name: str, epochs=1, batch_size=256, lr=0.01):
+    net = net.to(device)
+
     dataloader = mnist.pytorch(transform=transform, batch_size=batch_size)
     optim = SGD(net.parameters(), lr=lr)
 
@@ -74,6 +75,9 @@ def train(net, name: str, epochs=1, batch_size=256, lr=0.01):
         epoch_loss = metrics.create_tensor(f"loss_epoch_{epoch}", dtype=float)
 
         for x, t in dataloader:
+            x = x.to(device)
+            t = t.to(device).view(-1)
+
             optim.zero_grad()
 
             # predict
@@ -86,9 +90,11 @@ def train(net, name: str, epochs=1, batch_size=256, lr=0.01):
 
             # metrics
             epoch_loss.append(loss.item())
-        loss_epoch_average.append(np.mean(epoch_loss))
+        mean_loss = np.mean(epoch_loss)
+        loss_epoch_average.append(mean_loss)
+        print(f"epoch {epoch} loss: {mean_loss}")
 
     return metrics
 
-metrics = train(big_net, "big_net", epochs=10)
-print(metrics.loss_epoch_average.numpy())
+big_metrics = train(big_net, "big_net", epochs=10)
+print(big_metrics.loss_epoch_average.numpy())
