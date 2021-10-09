@@ -26,7 +26,8 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=True).to(device)
 
-    imagenet = hub.load("hub://jayanth/imagenet-2019-PIL-210914-train")[:max_samples]
+    # TODO: imagenet coming soon!
+    imagenet = hub.load("hub://activeloop/imagenet")[:max_samples]
     dataloader = imagenet.pytorch(num_workers=dataloader_workers, transform=transform_sample, batch_size=batch_size)
 
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
