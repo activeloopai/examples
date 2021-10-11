@@ -15,7 +15,7 @@ from models import get_big_net, get_small_net
 MAX_SAMPLES = 128
 TRAIN_URI = "hub://activeloop/mnist-train"
 TEST_URI = "hub://activeloop/mnist-test"
-EMBEDDINGS_URI = "._datasets/teacher_embeddings"
+EMBEDDINGS_URI = "./_datasets/teacher_embeddings"
 
 
 

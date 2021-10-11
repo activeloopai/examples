@@ -17,7 +17,7 @@ class Learner(pl.LightningModule):
         super().__init__()
 
         self.model = model
-        self.lr = lr
+        self.hparams.lr = lr
 
     def forward(self, x):
         return self.model(x)
@@ -37,4 +37,4 @@ class Learner(pl.LightningModule):
         return {"val_loss": loss}
 
     def configure_optimizers(self):
-        return Adam(self.parameters(), lr=self.lr)
+        return Adam(self.parameters(), lr=self.hparams.lr)

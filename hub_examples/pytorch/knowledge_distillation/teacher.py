@@ -1,3 +1,4 @@
+import hub
 import pytorch_lightning as pl
 
 from torch.optim import Adam
@@ -19,8 +20,9 @@ class Teacher(pl.LightningModule):
         super().__init__()
 
         self.model = model
-        self.critereon = cross_entropy
-        self.lr = lr
+        self.loss = cross_entropy
+
+        self.hparams.lr = lr
 
     def forward(self, x):
         return self.model(x)
@@ -28,16 +30,16 @@ class Teacher(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self.forward(x)
-        loss = self.critereon(y_hat, y.view(-1))
+        loss = self.loss(y_hat, y.view(-1))
 
         return {"loss": loss}
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self.forward(x)
-        loss = self.critereon(y_hat, y.view(-1))
+        loss = self.loss(y_hat, y.view(-1))
 
         return {"val_loss": loss}
 
     def configure_optimizers(self):
-        return Adam(self.parameters(), lr=self.lr)
+        return Adam(self.parameters(), lr=self.hparams.lr)
