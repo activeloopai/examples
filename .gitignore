@@ -5,6 +5,8 @@ __pycache__/
 
 _datasets/*
 lightning_logs/*
+wandb/*
+examples-hub_examples*
 
 # C extensions
 *.so
