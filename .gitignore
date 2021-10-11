@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 _datasets/*
+lightning_logs/*
 
 # C extensions
 *.so

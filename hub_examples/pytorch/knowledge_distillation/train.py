@@ -15,7 +15,7 @@ from models import get_big_net, get_small_net
 MAX_SAMPLES = 128
 TRAIN_URI = "hub://activeloop/mnist-train"
 TEST_URI = "hub://activeloop/mnist-test"
-EMBEDDINGS_URI = "./teacher_embeddings"
+EMBEDDINGS_URI = "._datasets/teacher_embeddings"
 
 
 
@@ -46,7 +46,7 @@ def get_learner_loaders():
         t = t.float()
         return x, t
 
-    train = mnist_embeddings.pytorch(transform=transform, shuffle=False, batch_size=128, num_workers=4)
+    train = mnist_embeddings.pytorch(transform=transform, shuffle=True, batch_size=128, num_workers=4)
 
     _, val = get_teacher_loaders()
 
@@ -88,6 +88,7 @@ def train_learner(model: pl.LightningModule, epochs=1):
 
 if __name__ == "__main__":
     # first, we need to train the teacher network
+    print("\n\nTraining teacher\n\n")
     big_net = get_big_net()
     train_teacher(Teacher(big_net))
 
@@ -95,9 +96,11 @@ if __name__ == "__main__":
     # this new dataset doesn't change the `images` tensor (it just copies it)
     # but it DOES change the `labels` tensor. instead of the normal mnist labels,
     # it uses the embeddings (outputs for each `images` sample) of the teacher model
-    # generate_teacher_embedding_dataset(big_net)
+    print("\n\nGenerating embedding dataset\n\n")
+    generate_teacher_embedding_dataset(big_net)
 
     # finally, we can train the learner network to predict the output embeddings
     # of the teacher network. we can do so by using the new output embeddings dataset
-    # small_net = get_small_net()
-    # train_learner(Learner(small_net))
+    print("\n\nTraining learner on embedding dataset\n\n")
+    small_net = get_small_net()
+    train_learner(Learner(small_net))
