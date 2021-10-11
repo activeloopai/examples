@@ -30,7 +30,7 @@ def get_teacher_loaders():
         t = t.long()
         return x, t
 
-    train = mnist_train.pytorch(transform=transform, shuffle=False, batch_size=128, num_workers=4)
+    train = mnist_train.pytorch(transform=transform, shuffle=True, batch_size=128, num_workers=4)
     val = mnist_test.pytorch(transform=transform, shuffle=False, batch_size=128, num_workers=4)
 
     return train, val
@@ -95,9 +95,9 @@ if __name__ == "__main__":
     # this new dataset doesn't change the `images` tensor (it just copies it)
     # but it DOES change the `labels` tensor. instead of the normal mnist labels,
     # it uses the embeddings (outputs for each `images` sample) of the teacher model
-    generate_teacher_embedding_dataset(big_net)
+    # generate_teacher_embedding_dataset(big_net)
 
     # finally, we can train the learner network to predict the output embeddings
     # of the teacher network. we can do so by using the new output embeddings dataset
-    small_net = get_small_net()
-    train_learner(Learner(small_net))
+    # small_net = get_small_net()
+    # train_learner(Learner(small_net))
