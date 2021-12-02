@@ -18,6 +18,7 @@ A repository showcasing examples of using [Hub](https://github.com/pytorch/pytor
 | Creating Complex Detection Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Creating_Complex_Datasets.ipynb) |
 | Data Processing Using Parallel Computing | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/istranic-adding-colabs/colabs/Data_Processing_Using_Parallel_Computing.ipynb) |
 | Training an Image Classification Model in PyTorch  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Training_an_Image_Classification_Model_in_PyTorch.ipynb) |
+| Creating Time-Series Datasets  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Creating_Time_Series_Datasets.ipynb) |
 
 
  
