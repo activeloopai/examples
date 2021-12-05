@@ -55,21 +55,15 @@ class MNISTModel(pl.LightningModule):
 
     def train_dataloader(self):
         # REQUIRED
-        def tranform(x):
-            return x["images"][None, :, :].astype("float32"), x["labels"][0]
-
         return hub.load("hub://activeloop/mnist-train").pytorch(
             batch_size=32,
-            num_workers=8,
+            num_workers=2,
             use_local_cache=True,
             transform=tranform,
         )
 
     def val_dataloader(self):
         # OPTIONAL
-        def tranform(x):
-            return x["images"][None, :, :].astype("float32"), x["labels"][0]
-
         return hub.load("hub://activeloop/mnist-test").pytorch(
             batch_size=32,
             num_workers=0,
@@ -79,9 +73,6 @@ class MNISTModel(pl.LightningModule):
 
     def test_dataloader(self):
         # OPTIONAL
-        def tranform(x):
-            return x["images"][None, :, :].astype("float32"), x["labels"][0]
-
         return hub.load("hub://activeloop/mnist-test").pytorch(
             batch_size=32,
             num_workers=0,
@@ -89,10 +80,15 @@ class MNISTModel(pl.LightningModule):
             transform=tranform,
         )
 
+# outside the class to make it pickalable
+# formats the data to meet the input layer 
+def tranform(x):
+    return x["images"][None, :, :].astype("float32"), x["labels"][0]
+
 
 if __name__ == "__main__":
 
     mnist_model = MNISTModel()
-    trainer = pl.Trainer(gpus=2, max_epochs=2)
+    trainer = pl.Trainer(gpus=0, max_epochs=2, strategy="ddp")
     trainer.fit(mnist_model)
     trainer.test(mnist_model)
