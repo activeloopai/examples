@@ -81,14 +81,14 @@ class MNISTModel(pl.LightningModule):
         )
 
 # outside the class to make it pickalable
-# formats the data to meet the input layer 
 def tranform(x):
+    """ Formats the data to meet the input layer """
     return x["images"][None, :, :].astype("float32"), x["labels"][0]
 
 
 if __name__ == "__main__":
 
     mnist_model = MNISTModel()
-    trainer = pl.Trainer(gpus=0, max_epochs=2, strategy="ddp")
+    trainer = pl.Trainer()
     trainer.fit(mnist_model)
     trainer.test(mnist_model)
