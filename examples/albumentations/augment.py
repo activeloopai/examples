@@ -25,7 +25,7 @@ def transform(sample):
 
 def loop():
     # Load the dataset
-    ds = hub.load("hub://davitbun/places365-val")
+    ds = hub.load("hub://activeloop/cifar100-train")
 
     # Define the dataloader with the transform
     dataloader = ds.pytorch(
