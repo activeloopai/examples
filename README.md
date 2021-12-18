@@ -7,7 +7,7 @@
  
 A repository showcasing examples of using [Hub](https://github.com/pytorch/pytorch)
  - [Uploading Dataset Places365](datasets/places365)
- 
+ - [Training a model using Pytorch Lightning](examples/pytorch-lightning)
  
 ### Colab Tutorials
 
