@@ -9,6 +9,7 @@ A repository showcasing examples of using [Hub](https://github.com/activeloopai/
  - [Uploading Dataset Places365](datasets/places365)
  - [Training a model using Pytorch Lightning](examples/pytorch-lightning)
  - [Augmentation using Albumentations](examples/albumentations)
+ - [Run Hub on MinIO (local S3)](examples/minio)
  
 ### Colab Tutorials
 
