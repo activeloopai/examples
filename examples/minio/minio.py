@@ -28,7 +28,7 @@ def loop(path: str):
 
 
 if __name__ == "__main__":
-    path = 's3://bucket/dataset'
+    path = 's3://mybucket/dataset'
 
     create_dataset(path)
     loop(path)

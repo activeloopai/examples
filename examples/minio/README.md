@@ -1,7 +1,7 @@
 
 ## Run Hub on MinIO
 
-Run MinIO container and create a bucket called `myBucket` using UI at `http://localhost:9001`. 
+Run MinIO container and create a bucket called `mybucket` using UI at `http://localhost:9001`. 
 ```
 docker run \
   -p 9000:9000 \
