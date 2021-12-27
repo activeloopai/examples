@@ -3,6 +3,7 @@ from hub.core.dataset import Dataset  # type: ignore
 from PIL import Image, ImageFilter, ImageOps, ImageEnhance  # type: ignore
 import random
 from typing import Tuple
+import argparse
 
 
 @hub.compute
@@ -304,8 +305,27 @@ def cvt_padding(
 
 if __name__ == "__main__":
 
-    ds_input = hub.load("/input/path")
-    ds_output = hub.like("/output/path", ds_input)
+    parser = argparse.ArgumentParser(
+        description="Augments the input dataset with various operations and saves it to the output dataset"
+    )
+    parser.add_argument(
+        "--input_path",
+        type=str,
+        default="hub://activeloop/cifar10-train",
+        metavar="I",
+        help="path to input dataset (default: hub://activeloop/cifar10-train)",
+    )
+    parser.add_argument(
+        "--output_path",
+        type=str,
+        default="./augmented_dataset",
+        metavar="O",
+        help="path to output dataset (default: ./augmented_dataset)",
+    )
+    args = parser.parse_args()
+
+    ds_input = hub.load(args.input_path)
+    ds_output = hub.like(args.output_path, ds_input)
     pipeline = hub.compose(
         [
             cvt_horizontal_flip(probability=0.4),
