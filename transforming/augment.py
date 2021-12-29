@@ -329,7 +329,7 @@ if __name__ == "__main__":
     pipeline = hub.compose(
         [
             cvt_horizontal_flip(probability=0.4),
-            cvt_crop(crop_locations=-1, probability=0.8),
+            cvt_crop(probability=0.8),
             cvt_gray(probability=0.7),
             cvt_padding(pad_size=(10, 10, 10, 10), bg_color=(0, 0, 0), probability=0.5),
             cvt_resize(resize_size=(100, 80), probability=0.6),
