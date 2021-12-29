@@ -92,8 +92,19 @@ def cvt_gray(
     """
     img = Image.fromarray(sample_input.images.numpy())
     if random.uniform(0, 1) < probability:
+        new_img = Image.new(
+            img.mode,
+            (
+                img.size[0],
+                img.size[1],
+            ),
+            (0, 0, 0),
+        )
         img = ImageOps.grayscale(img)
-    sample_output.images.append(img)
+        new_img.paste(img, (0, 0))
+        sample_output.images.append(new_img)
+    else:
+        sample_output.images.append(img)
     sample_output.labels.append(sample_input.labels.numpy())
     return sample_output
 
@@ -158,7 +169,7 @@ def cvt_crop(
     Args:
         sample_input: input dataset passed to generate output dataset.
         sample_output: output dataset which will contain transforms of input dataset.
-        crop_locations: tuple (start_x,start_y,end_x,end_y) to determine region for crop. Defaults to -1 which causes a centre crop.
+        crop_locations: tuple (start_x,start_y,end_x,end_y) to determine region for crop. Defaults to None which causes a centre crop.
         probability: probability to randomly apply transformation. Defaults to 0.5.
 
     Returns:
@@ -191,7 +202,7 @@ def cvt_resize(
     Args:
         sample_input: input dataset passed to generate output dataset.
         sample_output: output dataset which will contain transforms of input dataset.
-        resize_size: tuple (width,height) to determine dimensions for resize. Defaults to -1 which prevents resizing.
+        resize_size: tuple (width,height) to determine dimensions for resize. Defaults to None which prevents resizing.
         probability: probability to randomly apply transformation. Defaults to 0.5.
 
     Returns:
@@ -298,7 +309,9 @@ def cvt_padding(
             pad_color,
         )
         new_img.paste(img, (pad_size[0], pad_size[1]))
-    sample_output.images.append(new_img)
+        sample_output.images.append(new_img)
+    else:
+        sample_output.images.append(img)
     sample_output.labels.append(sample_input.labels.numpy())
     return sample_output
 
@@ -325,13 +338,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ds_input = hub.load(args.input_path)
-    ds_output = hub.like(args.output_path, ds_input)
+    ds_output = hub.like(args.output_path, ds_input, overwrite=True)
     pipeline = hub.compose(
         [
-            cvt_horizontal_flip(probability=0.4),
+            cvt_horizontal_flip(probability=0.5),
             cvt_crop(probability=0.8),
             cvt_gray(probability=0.7),
-            cvt_padding(pad_size=(10, 10, 10, 10), bg_color=(0, 0, 0), probability=0.5),
+            cvt_padding(
+                pad_size=(10, 10, 10, 10), pad_color=(0, 0, 0), probability=0.4
+            ),
             cvt_resize(resize_size=(100, 80), probability=0.6),
         ]
     )
