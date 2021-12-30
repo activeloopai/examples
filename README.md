@@ -7,7 +7,7 @@
  
 A repository showcasing examples of using [Hub](https://github.com/activeloopai/Hub)
  - [Uploading Dataset Places365](places365/upload.py)
- - [Notebook on uploading Coco](coco/upload_coco.ipynb)
+ - [Notebook on uploading COCO](coco/upload_coco.ipynb)
  - [Training a model using Pytorch Lightning](pytorch-lightning/mnist.py)
  - [Augmentation using Albumentations](albumentations/augment.py)
  - [Run Hub on MinIO (local S3)](minio)
