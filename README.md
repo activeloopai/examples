@@ -6,10 +6,12 @@
  
  
 A repository showcasing examples of using [Hub](https://github.com/activeloopai/Hub)
- - [Uploading Dataset Places365](datasets/places365)
- - [Training a model using Pytorch Lightning](examples/pytorch-lightning)
- - [Augmentation using Albumentations](examples/albumentations)
- - [Run Hub on MinIO (local S3)](examples/minio)
+ - [Uploading Dataset Places365](places365/upload.py)
+ - [Notebook on uploading Coco](coco/upload_coco.ipynb)
+ - [Training a model using Pytorch Lightning](pytorch-lightning/mnist.py)
+ - [Augmentation using Albumentations](albumentations/augment.py)
+ - [Run Hub on MinIO (local S3)](minio)
+ - [Computer Vision Transformation pipeline on Cifar](transforming)
  
 ### Colab Tutorials
 
@@ -21,106 +23,6 @@ A repository showcasing examples of using [Hub](https://github.com/activeloopai/
 | Data Processing Using Parallel Computing | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/istranic-adding-colabs/colabs/Data_Processing_Using_Parallel_Computing.ipynb) |
 | Training an Image Classification Model in PyTorch  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Training_an_Image_Classification_Model_in_PyTorch.ipynb) |
 | Creating Time-Series Datasets  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Creating_Time_Series_Datasets.ipynb) |
-
-
- 
-## Getting Started with Hub 🚀 
-
-
-### Installation
-Hub is written in 100% python and can be quickly installed using pip.
-```sh
-pip3 install hub
-```
-
-
-### Creating Datasets
-
-A hub dataset can be created in various locations (Storage providers). This is how the paths for each of them would look like:
-
-| Storage provider | Example path                  |
-| ---------------- | ----------------------------- |
-| Hub cloud        | hub://user_name/dataset_name  |
-| AWS S3           | s3://bucket_name/dataset_name |
-| GCP              | gcp://bucket_name/dataset_name|
-| Local storage    | path to local directory       |
-| In-memory        | mem://dataset_name            |
-
-
-
-Let's create a dataset in the Hub cloud. Create a new account with Hub from the terminal using `activeloop register` if you haven't already. You will be asked for a user name, email id and passowrd. The user name you enter here will be used in the dataset path.
-
-```sh
-$ activeloop register
-Enter your details. Your password must be atleast 6 characters long.
-Username:
-Email:
-Password:
-```
-
-Initialize an empty dataset in the hub cloud:
-
-```python
-import hub
-
-ds = hub.empty("hub://<USERNAME>/test-dataset")
-```
-
-Next, create a tensor to hold images in the dataset we just initialized:
-
-```python
-images = ds.create_tensor("images", htype="image", sample_compression="jpg")
-```
-
-Assuming you have a list of image file paths, lets upload them to the dataset:
-
-```python
-image_paths = ...
-with ds:
-    for image_path in image_paths:
-        image = hub.read(image_path)
-        ds.images.append(image)
-```
-
-Alternatively, you can also upload numpy arrays. Since the `images` tensor was created with `sample_compression="jpg"`, the arrays will be compressed with jpeg compression.
-
-
-```python
-import numpy as np
-
-with ds:
-    for _ in range(1000):  # 1000 random images
-        radnom_image = np.random.randint(0, 256, (100, 100, 3))  # 100x100 image with 3 channels
-        ds.images.append(image)
-```
-
-
-
-### Loading Datasets
-
-
-You can load the dataset you just created with a single line of code:
-
-```python
-import hub
-
-ds = hub.load("hub://<USERNAME>/test-dataset")
-```
-
-You can also access other publicly available hub datasets, not just the ones you created. Here is how you would load the [Objectron Bikes Dataset](https://github.com/google-research-datasets/Objectron):
-
-```python
-import hub
-
-ds = hub.load('hub://activeloop/objectron_bike_train')
-```
-
-To get the first image in the Objectron Bikes dataset in numpy format:
-
-
-```python
-image_arr = ds.image[0].numpy()
-```
 
 
 
