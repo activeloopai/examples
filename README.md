@@ -1,5 +1,5 @@
 <img src="https://static.scarf.sh/a.png?x-pxid=bc3c57b0-9a65-49fe-b8ea-f711c4d35b82" /><p align="center">
-    <img src="https://www.linkpicture.com/q/hub_logo-1.png" width="35%"/>
+    <img src="https://i.ibb.co/yk6hDfN/image.png" width="35%"/>
     </br>
     <h1 align="center">Examples for <a href="https://github.com/activeloopai/Hub">Hub</a> - Dataset Format for AI
  </h1>
