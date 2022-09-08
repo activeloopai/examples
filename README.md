@@ -24,6 +24,14 @@ A repository showcasing examples of using [Hub](https://github.com/activeloopai/
 | Training an Image Classification Model in PyTorch  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Training_an_Image_Classification_Model_in_PyTorch.ipynb) |
 | Creating Time-Series Datasets  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Creating_Time_Series_Datasets.ipynb) |
 
+Machine Learning teams can apply Activeloop's data infrastructure to ship their models fast in the following use cases:
+
+ 1. [AgriTech](https://www.activeloop.ai/solutions/agriculture/)
+ 2. [Audio processing](https://www.activeloop.ai/solutions/audio/)
+ 3. [Autonomous Vehicles & Robotics](https://www.activeloop.ai/solutions/autonomous-vehicles-robotics/)
+ 4. [Biomedical and Healthcare ML](https://www.activeloop.ai/solutions/biomedical-healthcare/)
+ 5. Multimedia: [Image enhancement, video enhancement, face detection, sports analytics, or machine learning for AR/VR](https://www.activeloop.ai/solutions/multimedia/)
+ 6. Safety & Security: [surveillance machine learning with biometrics, facial recognition, or crowd counting](https://www.activeloop.ai/solutions/safety-security/)
 
 
 ## Documentation
