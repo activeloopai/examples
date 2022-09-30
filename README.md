@@ -1,7 +1,7 @@
 <img src="https://static.scarf.sh/a.png?x-pxid=bc3c57b0-9a65-49fe-b8ea-f711c4d35b82" /><p align="center">
-    <img src="https://i.ibb.co/yk6hDfN/image.png" width="35%"/>
+     <img src="https://i.postimg.cc/rsjcWc3S/deeplake-logo.png" width="300"/>
     </br>
-    <h1 align="center">Examples for <a href="https://github.com/activeloopai/Hub">Hub</a> - Dataset Format for AI
+    <h1 align="center">Examples for <a href="https://github.com/activeloopai/deeplake">Deep Lake</a> - Dataset Format for AI
  </h1>
  
  
@@ -10,14 +10,14 @@ A repository showcasing examples of using [Deep Lake](https://github.com/activel
  - [Notebook on uploading COCO](coco/upload_coco.ipynb)
  - [Training a model using Pytorch Lightning](pytorch-lightning/mnist.py)
  - [Augmentation using Albumentations](albumentations/augment.py)
- - [Run Hub on MinIO (local S3)](minio)
+ - [Run Deep Lake on MinIO (local S3)](minio)
  - [Computer Vision Transformation pipeline on Cifar](transforming)
  
 ### Colab Tutorials
 
 | Notebook    | Link |
 |-------------|------|
-| Getting Started with Hub  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Getting_Started_with_Hub.ipynb) |
+| Getting Started with Deep Lake  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Getting_Started_with_Hub.ipynb) |
 | Creating Object Detection Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Creating_Object_Detection_Datasets.ipynb) |
 | Creating Complex Detection Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/main/colabs/Creating_Complex_Datasets.ipynb) |
 | Data Processing Using Parallel Computing | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/activeloopai/examples/blob/istranic-adding-colabs/colabs/Data_Processing_Using_Parallel_Computing.ipynb) |
