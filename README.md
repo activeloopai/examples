@@ -5,7 +5,7 @@
  </h1>
  
  
-A repository showcasing examples of using [Hub](https://github.com/activeloopai/Hub)
+A repository showcasing examples of using [Deep Lake](https://github.com/activeloopai/deeplake)
  - [Uploading Dataset Places365](places365/upload.py)
  - [Notebook on uploading COCO](coco/upload_coco.ipynb)
  - [Training a model using Pytorch Lightning](pytorch-lightning/mnist.py)
