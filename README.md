@@ -1,10 +1,11 @@
+[Deprecated] while some tutorials work, they are outdated, would really appreciate contributions to update examples to Deep Lake.
+
 <img src="https://static.scarf.sh/a.png?x-pxid=bc3c57b0-9a65-49fe-b8ea-f711c4d35b82" /><p align="center">
      <img src="https://i.postimg.cc/rsjcWc3S/deeplake-logo.png" width="300"/>
     </br>
     <h1 align="center">Examples for <a href="https://github.com/activeloopai/deeplake">Deep Lake</a> - Dataset Format for AI
  </h1>
- 
- 
+
 A repository showcasing examples of using [Deep Lake](https://github.com/activeloopai/deeplake)
  - [Uploading Dataset Places365](places365/upload.py)
  - [Notebook on uploading COCO](coco/upload_coco.ipynb)
